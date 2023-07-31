@@ -1,8 +1,13 @@
 package de.exxcellent.challenge;
 
+import de.exxcellent.challenge.adapter.CliAdapter;
+import de.exxcellent.challenge.service.FootballServiceImpl;
+import de.exxcellent.challenge.service.WeatherServiceImpl;
+import de.exxcellent.challenge.util.mapper.CsvModelMapper;
+
 /**
- * The entry class for your solution. This class is only aimed as starting point and not intended as baseline for your software
- * design. Read: create your own classes and packages as appropriate.
+ * The entry class for your solution. This class is only aimed as starting point and not intended as
+ * baseline for your software design. Read: create your own classes and packages as appropriate.
  *
  * @author Benjamin Schmid <benjamin.schmid@exxcellent.de>
  */
@@ -10,16 +15,19 @@ public final class App {
 
     /**
      * This is the main entry method of your program.
+     *
      * @param args The CLI arguments passed
      */
     public static void main(String... args) {
 
-        // Your preparation code …
+        final var moddelMapper = new CsvModelMapper();
+        final var footballService = new FootballServiceImpl();
+        final var weatherService = new WeatherServiceImpl();
 
-        String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
-        System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+        final var cliAdapter = new CliAdapter(moddelMapper, footballService, weatherService);
 
-        String teamWithSmallestGoalSpread = "A good team"; // Your goal analysis function call …
-        System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
+        cliAdapter.handleRequest(args);
+
     }
+
 }
