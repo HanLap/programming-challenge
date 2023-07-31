@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Football App" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="de.exxcellent.challenge.App" />
+    <module name="challenge" />
+    <option name="PROGRAM_PARAMETERS" value="--football ./target/classes/de/exxcellent/challenge/football.csv" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="de.exxcellent.challenge.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

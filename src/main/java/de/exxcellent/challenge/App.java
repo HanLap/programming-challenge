@@ -1,6 +1,7 @@
 package de.exxcellent.challenge;
 
 import de.exxcellent.challenge.adapter.CliAdapter;
+import de.exxcellent.challenge.service.FootballServiceImpl;
 import de.exxcellent.challenge.service.WeatherServiceImpl;
 import de.exxcellent.challenge.util.mapper.CsvModelMapper;
 
@@ -20,9 +21,10 @@ public final class App {
     public static void main(String... args) {
 
         final var moddelMapper = new CsvModelMapper();
+        final var footballService = new FootballServiceImpl();
         final var weatherService = new WeatherServiceImpl();
 
-        final var cliAdapter = new CliAdapter(moddelMapper, weatherService);
+        final var cliAdapter = new CliAdapter(moddelMapper, footballService, weatherService);
 
         cliAdapter.handleRequest(args);
 

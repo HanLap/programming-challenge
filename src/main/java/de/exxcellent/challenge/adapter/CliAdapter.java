@@ -1,6 +1,8 @@
 package de.exxcellent.challenge.adapter;
 
 import de.exxcellent.challenge.model.DailyWeatherData;
+import de.exxcellent.challenge.model.FootballResult;
+import de.exxcellent.challenge.service.FootballService;
 import de.exxcellent.challenge.service.WeatherService;
 import de.exxcellent.challenge.util.mapper.ModelMapper;
 import de.exxcellent.challenge.util.mapper.ModelMapperException;
@@ -15,10 +17,13 @@ import java.util.List;
 public class CliAdapter {
 
     private final ModelMapper modelMapper;
+    private final FootballService footballService;
     private final WeatherService weatherService;
 
-    public CliAdapter(ModelMapper modelMapper, WeatherService weatherService) {
+    public CliAdapter(ModelMapper modelMapper, FootballService footballService,
+            WeatherService weatherService) {
         this.modelMapper = modelMapper;
+        this.footballService = footballService;
         this.weatherService = weatherService;
     }
 
@@ -35,6 +40,9 @@ public class CliAdapter {
 
         if ("--weather".equals(program)) {
             handleCalcMinTempSpread(fileLocation);
+
+        } else if ("--football".equals(program)) {
+            handleCalcMinGoalDistance(fileLocation);
 
         } else {
             System.err.printf("Invalid argument: %s%n", program);
@@ -59,6 +67,26 @@ public class CliAdapter {
 
         } catch (Exception e) {
             System.err.println("Could not determine Day with smallest spread:");
+            System.err.println(e.getMessage());
+            System.exit(1);
+
+        }
+    }
+
+    private void handleCalcMinGoalDistance(String fileLocation) {
+
+        final var footballData = parseFileToModel(FootballResult.class, fileLocation);
+
+        try {
+
+            String teamWithSmallestGoalSpread = footballService.findTeamSmallestGoalDifference(
+                    footballData);
+
+            System.out.printf("Team with smallest goal spread: %s%n",
+                    teamWithSmallestGoalSpread);
+
+        } catch (Exception e) {
+            System.err.println("Could not determine Team with minimum goal distance:");
             System.err.println(e.getMessage());
             System.exit(1);
 

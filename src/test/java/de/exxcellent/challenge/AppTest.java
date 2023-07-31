@@ -21,6 +21,11 @@ class AppTest {
                 AppTest.class.getClassLoader().getResource("de/exxcellent/challenge/weather.csv")
                         .toURI()).toString();
         assertDoesNotThrow(() -> App.main("--weather", weatherFile));
+
+        final var footballFile = Path.of(
+                AppTest.class.getClassLoader().getResource("de/exxcellent/challenge/football.csv")
+                        .toURI()).toString();
+        assertDoesNotThrow(() -> App.main("--football", footballFile));
     }
 
 }
